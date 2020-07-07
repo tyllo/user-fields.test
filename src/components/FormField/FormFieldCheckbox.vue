@@ -1,5 +1,5 @@
 <template>
-  <b-input
+  <b-checkbox
     :value="value"
     @input="$emit('input', $event)"
   />
@@ -7,10 +7,10 @@
 
 <script>
 export default {
-  name: 'FormFieldInput',
+  name: 'FormFieldCheckbox',
   inheritAttrs: false,
   props: {
-    value: String,
+    value: Boolean,
   },
 };
 </script>

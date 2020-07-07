@@ -2,6 +2,7 @@
   "data": {
     "name":   "User Name",
     "gender": "male",
-    "sub":    "2020-03-04T13:40Z"
+    "sub":    "2020-03-04T13:40Z",
+    "is_active": true
   }
 }

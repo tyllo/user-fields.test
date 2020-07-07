@@ -1,31 +1,17 @@
 <template>
-  <Validator
-    :label="field.label"
-    :field="field.field"
-    :validator="field.validator"
-  >
-    <b-datepicker
-      :value="model"
-      @input="$emit('input', $event)"
-    />
-  </Validator>
+  <b-datepicker
+    :value="model"
+    icon="calendar-today"
+    @input="$emit('input', $event)"
+  />
 </template>
 
 <script>
-import Validator from '@/components/Validator.vue';
-
 export default {
   name: 'FormFieldDate',
-  components: {
-    Validator,
-  },
   inheritAttrs: false,
   props: {
     value: String,
-    field: {
-      type: Object,
-      reuired: true,
-    },
   },
   computed: {
     model() {

@@ -29,6 +29,11 @@
        "field":     "sub",
        "type":      "date",
        "validator": "dateValidator"
-    }
+    },
+    {
+      "label":     "Active",
+      "field":     "is_active",
+      "type":      "checkbox"
+   }
   ]
 }

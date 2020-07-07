@@ -1,19 +1,35 @@
 <template>
   <form name="user-form" class="user-form" @submit.prevent="onSubmit">
-    <template v-for="(_, key) in form">
-      <FormField
-        v-model="form[key]"
-        :key="key"
-        :field="filedsMap[key]"
-        :type="filedsMap[key].type"
-        @input="onChange"
-      />
-    </template>
+    <ValidatorObserver ref="validator">
+      <template v-for="(value, key) in form">
+        <validator-provider
+          :key="key"
+          :validator="filedsMap[key].validator"
+          :value="value"
+          :name="filedsMap[key].field"
+          #default="{ $error, $message }"
+        >
+          <FormField
+            v-model="form[key]"
+            :key="key"
+            :error="$error"
+            :message="$message"
+            :field="filedsMap[key]"
+            @input="onChange"
+          />
+        </validator-provider>
+      </template>
+    </ValidatorObserver>
   </form>
 </template>
 
 <script>
+import * as validators from '@/helpers/validators';
+import ValidatorObserver from '@/components/Validator/ValidatorObserver.vue';
+import ValidatorProvider from '@/components/Validator/ValidatorProvider.vue';
 import FormField from '@/components/FormField.vue';
+
+const VALIDATORS_LIST = Object.values(validators);
 
 export default {
   name: 'UserForm',
@@ -22,6 +38,8 @@ export default {
     event: 'change',
   },
   components: {
+    ValidatorObserver,
+    ValidatorProvider,
     FormField,
   },
   props: {
@@ -46,7 +64,12 @@ export default {
   computed: {
     filedsMap() {
       return this.fileds.reduce((acc, data) => {
-        acc[data.field] = data;
+        const validator = (
+          VALIDATORS_LIST.find(({ id }) => id === data.validator)
+          || acc.validator
+        );
+
+        acc[data.field] = { ...data, validator };
         return acc;
       }, {});
     },
@@ -57,8 +80,13 @@ export default {
       const from = JSON.parse(JSON.stringify(data));
       this.form = from;
     },
-    onChange() {
-      this.$emit('change', this.form);
+    async onChange() {
+      const { validator } = this.$refs;
+      const isValide = await validator.isValid();
+
+      if (isValide) {
+        this.$emit('change', this.form);
+      }
     },
   },
 };
