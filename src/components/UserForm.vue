@@ -20,6 +20,8 @@
         </validator-provider>
       </template>
     </ValidatorObserver>
+
+    <button type="submit" style="visibility: hidden;" />
   </form>
 </template>
 
@@ -86,6 +88,14 @@ export default {
 
       if (isValide) {
         this.$emit('change', this.form);
+      }
+    },
+    async onSubmit() {
+      const { validator } = this.$refs;
+      const isValide = await validator.isValid();
+
+      if (isValide) {
+        this.$emit('submit', this.form);
       }
     },
   },

@@ -39,8 +39,9 @@ export default {
   }),
   methods: {
     onSubmit(form) {
+      const data = JSON.stringify(form);
       // eslint-disable-next-line no-alert
-      alert(form);
+      alert(data);
     },
   },
 };
