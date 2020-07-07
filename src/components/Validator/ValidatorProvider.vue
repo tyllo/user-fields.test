@@ -1,16 +1,11 @@
-<template>
-  <div>
-    <slot
-      :$error="error"
-      :$message="message"
-    />
-  </div>
-</template>
-
 <script>
 export default {
   name: 'ValidatorProvider',
-  inject: ['$ValidatorObserver'],
+  inject: {
+    $ValidatorObserver: {
+      default: null,
+    },
+  },
   props: {
     validator: {
       type: Function,
@@ -19,10 +14,12 @@ export default {
     value: null,
   },
   created() {
-    this.$ValidatorObserver.addChildren(this);
+    // eslint-disable-next-line no-unused-expressions
+    this.$ValidatorObserver?.addChildren(this);
   },
   beforeDestory() {
-    this.$ValidatorObserver.RemoveChildren(this);
+    // eslint-disable-next-line no-unused-expressions
+    this.$ValidatorObserver?.RemoveChildren(this);
   },
   computed: {
     message() {
@@ -32,6 +29,15 @@ export default {
     error() {
       return !!this.message;
     },
+    options() {
+      return {
+        $error: this.error,
+        $message: this.message,
+      };
+    },
+  },
+  render() {
+    return this.$scopedSlots.default(this.options);
   },
 };
 </script>

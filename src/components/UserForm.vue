@@ -1,8 +1,8 @@
 <template>
-  <form name="user-form" class="user-form" @submit.prevent="onSubmit">
-    <ValidatorObserver ref="validator">
+  <ValidatorObserver ref="validator">
+    <form name="user-form" class="user-form" @submit.prevent="onSubmit">
       <template v-for="(value, key) in form">
-        <validator-provider
+        <ValidatorProvider
           :key="key"
           :validator="filedsMap[key].validator"
           :value="value"
@@ -17,12 +17,12 @@
             :field="filedsMap[key]"
             @input="onChange"
           />
-        </validator-provider>
+        </ValidatorProvider>
       </template>
-    </ValidatorObserver>
 
-    <button type="submit" style="visibility: hidden;" />
-  </form>
+      <button type="submit" style="visibility: hidden;" />
+    </form>
+  </ValidatorObserver>
 </template>
 
 <script>

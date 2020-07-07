@@ -26,7 +26,7 @@ const getFormComponent = (type) => {
       return FormFieldCheckbox;
 
     default:
-      // TODO: код алерта том что появился неподдерживаемый тип
+      // TODO: код алерта о том что появился неподдерживаемый тип
       // eslint-disable-next-line no-console
       console.warn(`[App warn]: компонент <FormFieldIndex /> не поддерживает тип "${type}"`);
       // TODO: здесь какой-нибудь компонент по умолчанию, пока пусть будет FormFieldInput

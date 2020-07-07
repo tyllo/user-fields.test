@@ -1,11 +1,3 @@
-<template>
-  <div>
-    <slot
-      :$error="error"
-    />
-  </div>
-</template>
-
 <script>
 
 export default {
@@ -25,6 +17,11 @@ export default {
     error() {
       return this.children.some((_) => _.error);
     },
+    options() {
+      return {
+        $error: this.$error,
+      };
+    },
   },
   methods: {
     addChildren(data) {
@@ -40,6 +37,9 @@ export default {
         this.$nextTick(() => resolve(!this.error));
       });
     },
+  },
+  render() {
+    return this.$scopedSlots.default(this.options);
   },
 };
 </script>

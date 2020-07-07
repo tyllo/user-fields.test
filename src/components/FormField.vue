@@ -1,5 +1,5 @@
 <template>
-  <form-field-label
+  <FormFieldLabel
     :label="field.label"
     :error="error"
     :message="message"
@@ -10,7 +10,7 @@
       :field="field"
       v-on="$listeners"
     />
-  </form-field-label>
+  </FormFieldLabel>
 </template>
 
 <script>
